@@ -86,7 +86,7 @@ P11 = Phi(1:3,1:3); P12 = Phi(1:3,4:6);
 P21 = Phi(4:6,1:3); P22 = Phi(4:6,4:6);
 
 % Attempt to solve the Riccati equation
-EQN_matrix = @(S) C'*S*C*(P11+P12*S) - P21 + P22*S;
+EQN_matrix = @(S) C'*S*C*(P11+P12*S) - P21 - P22*S;
 EQN_vector = @(z) reshape(EQN_matrix(reshape(z,[3,3])), [], 1);
 
 % Initial guess - the identity
