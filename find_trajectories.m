@@ -81,7 +81,6 @@ function [Cost,D] = shoot_forward(IC,odefun,param,p0,toggle)
     options = odeset('Events',eventfcn);
 
     % Run the trajectory forward, halting if a reset occurs
-    %disp(IC); disp(p0); disp(param.tf);
     [~,Z,te] = ode45(odefun, [0,param.tf], [IC;p0;0], options);
     % Terminal cost and states
     Cost = Z(end,5); zf = Z(end,1:4); hit = zf(1:2);
