@@ -15,23 +15,23 @@ clc; clear; tic;
 %% Initial parameters
 
 % Cost weights
-alpha = 20; beta = 0; kappa = 1;
+alpha = 10; beta = 10; kappa = 1;
 % Set Costs
 h = @(x)alpha*(x(1)-1)^2+beta*x(2)^2;
 g = @(x,u,t)kappa*1/2*u^2;
 
 % The time duration and discretization
 T = 10;
-times = linspace(0,T,100)';
+times = linspace(0,T,150)';
 dt = times(2)-times(1);
 N = length(times);
 
 % The controls discretization
-U = linspace(-1,3,100);
+U = linspace(-1,3,150);
 
 % The state-space discretization
-x1 = linspace(0,2,100);
-x2 = linspace(-2,2,100);
+x1 = linspace(0,2,150);
+x2 = linspace(-2,2,150);
 m1 = (length(x1)-1)/(x1(end)-x1(1));
 m2 = (length(x2)-1)/(x2(end)-x2(1));
 [X1,X2] = meshgrid(x1,x2);
@@ -101,13 +101,11 @@ for k = 1:length(times)-1
 end
 
 %% Display the value function
-figure;
-surf(X1,X2,J_star(:,:,index)','edgecolor','none'); view([0,90]);
+figure; L = linspace(0.8,1.599,8);
+contourf(X1,X2,J_star(:,:,index)',L ,'ShowText',true,'FaceAlpha',0.5);
 axis([0,1.25,-1.25,1.25]);
 xlabel('$x_0$','Interpreter','Latex','FontSize',14);
 ylabel('$v_0$','Interpreter','Latex','FontSize',14);
-c = colorbar;
-c.Label.FontSize = 14;
 title('Value Function','Interpreter','Latex','FontSize',14);
 
 %% Collecting and presenting the results
@@ -153,14 +151,14 @@ end
 % Plot
 % Plot the optimal trajectory
 subplot(211);
-plot(T,X,'b-','LineWidth',2);
+plot(T,X,'b--','LineWidth',2);
 % Plot the optimal control
 subplot(212); hold on;
 controls = T;
 for j = 1:length(T)
     controls(j) = u_f(T(j),[X(j),P(j)]);
 end
-plot(T,controls,'b-','LineWidth',2);
+plot(T,controls,'b--','LineWidth',2);
 
 sgtitle('Optimal Trajectory and Control','Interpreter','Latex','FontSize',14);
 %% End
